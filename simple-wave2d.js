@@ -25,7 +25,7 @@ let wave = [0, 1, 2, 3].map(elem => createGrid(gridLength, gridLength));
 // wave[3]: next time step
 
 
-function mouseChangeWave(event) {
+function mouseShapeWave(event) {
     if (event.buttons !== 0) {
         let x = Math.floor((event.clientX - canvas.offsetLeft)/grid2Canvas);
         let y = Math.floor((event.clientY - canvas.offsetTop)/grid2Canvas);
@@ -43,9 +43,7 @@ function mouseChangeWave(event) {
 }
 
 
-document.addEventListener("ontouchmove", mouseChangeWave);
-document.addEventListener("mousemove", mouseChangeWave);
-document.addEventListener("mouseup", event => {
+function mouseReleaseWave(event) {
     for (var i = 0; i < wave[0].length; i++) {
         for (var j = 0; j < wave[0][0].length; j++) {
             wave[1][i][j] += wave[0][i][j];
@@ -53,7 +51,13 @@ document.addEventListener("mouseup", event => {
             wave[0][i][j] = 0.0;
         }
     }
-});
+}
+
+
+document.addEventListener("touchmove", mouseShapeWave);
+document.addEventListener("mousemove", mouseShapeWave);
+document.addEventListener("touchend", mouseReleaseWave);   
+document.addEventListener("mouseup", mouseReleaseWave);
 
 
 function animate() {
