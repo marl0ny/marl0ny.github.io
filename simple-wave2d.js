@@ -62,12 +62,9 @@ function mouseShapeWave(event) {
 function touchShapeWave(event) {
     var touches = event.changedTouches;
     for (var i = 0; i < touches.length; i++) {
-        var j = ongoingTouchIndexById(touches[i].identifier);
-        if (j >= 0) {
-            let x = Math.floor((touches[i].pageX - canvas.offsetLeft)/grid2Canvas);
-            let y = Math.floor((touches[i].pageY - canvas.offsetTop)/grid2Canvas);
-            shapeWave(x, y);
-        }
+        let x = Math.floor((touches[i].pageX - canvas.offsetLeft)/grid2Canvas);
+        let y = Math.floor((touches[i].pageY - canvas.offsetTop)/grid2Canvas);
+        shapeWave(x, y);
     }
 }
 
