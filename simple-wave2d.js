@@ -71,8 +71,8 @@ function touchShapeWave(event) {
     }
 }
 
-document.addEventListener("touchstart", mouseShapeWave);
-document.addEventListener("touchmove", mouseShapeWave);
+document.addEventListener("touchstart", touchShapeWave);
+document.addEventListener("touchmove", touchShapeWave);
 document.addEventListener("mousemove", mouseShapeWave);
 document.addEventListener("touchend", ev => releaseWave());   
 document.addEventListener("mouseup", ev => releaseWave());
