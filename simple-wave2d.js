@@ -25,25 +25,21 @@ let wave = [0, 1, 2, 3].map(elem => createGrid(gridLength, gridLength));
 // wave[3]: next time step
 
 
-function mouseShapeWave(event) {
-    if (event.buttons !== 0) {
-        let x = Math.floor((event.clientX - canvas.offsetLeft)/grid2Canvas);
-        let y = Math.floor((event.clientY - canvas.offsetTop)/grid2Canvas);
-        for (var i = -Math.floor(wave[0].length/8)+1; i < wave[0].length/8; i++) {
-            for (var j = -Math.floor(wave[0].length/8)+1; j < wave[0].length/8; j++) {
-                if (((x + i) > 0 && (x + i) < wave[0].length - 1) && 
-                    ((y + j) > 0 && (y + j) < wave[0][0].length - 1)) {
-                    wave[0][x+i][y+j] = (
-                        amp*Math.exp(-1.0*(i*i + j*j)/(Math.sqrt(2.0)*wave[0].length/50.0)**2)
-                    );
-                }
+function shapeWave(x, y) {
+    for (var i = -Math.floor(wave[0].length/8)+1; i < wave[0].length/8; i++) {
+        for (var j = -Math.floor(wave[0].length/8)+1; j < wave[0].length/8; j++) {
+            if (((x + i) > 0 && (x + i) < wave[0].length - 1) && 
+                ((y + j) > 0 && (y + j) < wave[0][0].length - 1)) {
+                wave[0][x+i][y+j] = (
+                    amp*Math.exp(-1.0*(i*i + j*j)/(Math.sqrt(2.0)*wave[0].length/50.0)**2)
+                );
             }
         }
     }
 }
 
 
-function mouseReleaseWave(event) {
+function releaseWave() {
     for (var i = 0; i < wave[0].length; i++) {
         for (var j = 0; j < wave[0][0].length; j++) {
             wave[1][i][j] += wave[0][i][j];
@@ -54,10 +50,32 @@ function mouseReleaseWave(event) {
 }
 
 
+function mouseShapeWave(event) {
+    if (event.buttons !== 0) {
+        let x = Math.floor((event.clientX - canvas.offsetLeft)/grid2Canvas);
+        let y = Math.floor((event.clientY - canvas.offsetTop)/grid2Canvas);
+        shapeWave(x, y);
+    }
+}
+
+
+function touchShapeWave(event) {
+    var touches = event.changedTouches;
+    for (var i = 0; i < touches.length; i++) {
+        var j = ongoingTouchIndexById(touches[i].identifier);
+        if (j >= 0) {
+            let x = Math.floor((touches[i].pageX - canvas.offsetLeft)/grid2Canvas);
+            let y = Math.floor((touches[i].pageY - canvas.offsetTop)/grid2Canvas);
+            shapeWave(x, y);
+        }
+    }
+}
+
+document.addEventListener("touchstart", mouseShapeWave);
 document.addEventListener("touchmove", mouseShapeWave);
 document.addEventListener("mousemove", mouseShapeWave);
-document.addEventListener("touchend", mouseReleaseWave);   
-document.addEventListener("mouseup", mouseReleaseWave);
+document.addEventListener("touchend", ev => releaseWave());   
+document.addEventListener("mouseup", ev => releaseWave());
 
 
 function animate() {
