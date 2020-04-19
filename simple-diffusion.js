@@ -4,6 +4,7 @@ canvas.height = document.documentElement.clientHeight;
 let ctx = canvas.getContext("2d");
 let wave = [0, 1, 2].map(elem => (new Array(canvas.width).fill(0.0)));
 
+
 function shapeWave(x, y) {
     for (var i = -Math.floor(canvas.width/8)+1; i < canvas.width/8; i++) {
         wave[0][x+i] = ((x + i) > 0 && (x + i) < canvas.width - 1)? 
@@ -11,13 +12,15 @@ function shapeWave(x, y) {
     }
 }
 
-function mouseShapeWave(event) {
-    if (event.buttons !== 0) {
+
+function mouseShapeWave(event, onRelease=false) {
+    if (event.buttons !== 0 || onRelease) {
         let x = event.clientX - canvas.offsetLeft;
         let y = canvas.height/2 - (event.clientY - canvas.offsetTop);
         shapeWave(x, y);
     }
 }
+
 
 function touchShapeWave(event) {
     var touches = event.changedTouches;
@@ -28,6 +31,7 @@ function touchShapeWave(event) {
     }
 }
 
+
 function releaseWave() {
     for (let i = 0; i < wave[0].length; i++) {
         wave[1][i] += wave[0][i];
@@ -36,11 +40,16 @@ function releaseWave() {
     }    
 }
 
+
 document.addEventListener("touchstart", touchShapeWave);
 document.addEventListener("touchmove", touchShapeWave);
 document.addEventListener("mousemove", mouseShapeWave);
 document.addEventListener("touchend", event => releaseWave());
-document.addEventListener("mouseup", event => releaseWave());
+document.addEventListener("mouseup", event => {
+    mouseShapeWave(event, onRelease=true);
+    releaseWave();
+});
+
 
 function animate() {
     for (let k = 0; k < 200; k++) {
@@ -62,5 +71,4 @@ function animate() {
     ctx.closePath();
     requestAnimationFrame(animate);
 }
-
 requestAnimationFrame(animate);

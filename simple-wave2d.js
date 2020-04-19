@@ -50,8 +50,8 @@ function releaseWave() {
 }
 
 
-function mouseShapeWave(event) {
-    if (event.buttons !== 0) {
+function mouseShapeWave(event, onRelease=false) {
+    if (event.buttons !== 0 || onRelease) {
         let x = Math.floor((event.clientX - canvas.offsetLeft)/grid2Canvas);
         let y = Math.floor((event.clientY - canvas.offsetTop)/grid2Canvas);
         shapeWave(x, y);
@@ -68,11 +68,15 @@ function touchShapeWave(event) {
     }
 }
 
+
 document.addEventListener("touchstart", touchShapeWave);
 document.addEventListener("touchmove", touchShapeWave);
 document.addEventListener("mousemove", mouseShapeWave);
 document.addEventListener("touchend", ev => releaseWave());   
-document.addEventListener("mouseup", ev => releaseWave());
+document.addEventListener("mouseup", ev => {
+    mouseShapeWave(ev, onRelease=true); 
+    releaseWave();
+});
 
 
 function animate() {
@@ -92,5 +96,4 @@ function animate() {
     wave = [wave[0], wave[2], wave[3], wave[1]];
     requestAnimationFrame(animate);
 }
-
 requestAnimationFrame(animate);
