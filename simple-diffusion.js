@@ -7,8 +7,8 @@ let wave = [0, 1, 2].map(elem => (new Array(canvas.width).fill(0.0)));
 
 function shapeWave(x, y) {
     for (var i = -Math.floor(canvas.width/8)+1; i < canvas.width/8; i++) {
-        wave[0][x+i] = ((x + i) > 0 && (x + i) < canvas.width - 1)? 
-        y*Math.exp(-1.0*i*i/(Math.sqrt(2.0)*canvas.width/30.0)**2): wave[0][x+i];
+        if ((x + i) > 0 && (x + i) < canvas.width - 1)
+        wave[0][x+i] = y*Math.exp(-1.0*i*i/(Math.sqrt(2.0)*canvas.width/30.0)**2);
     }
 }
 
@@ -52,6 +52,10 @@ document.addEventListener("mouseup", event => {
 
 
 function animate() {
+    /*
+    if (wave[1][wave[1].length - 2] !== NaN) {
+        console.log(wave[1]);
+    }*/
     for (let k = 0; k < 200; k++) {
         for (let i = 1; i < wave[0].length - 1; i++) {
             wave[2][i] = (wave[1][i + 1] + wave[1][i - 1] - 2*wave[1][i])/4.0 + wave[1][i];

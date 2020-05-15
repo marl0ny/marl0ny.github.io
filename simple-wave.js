@@ -30,8 +30,8 @@ let wave = [0, 1, 2, 3].map(elem => new Array(canvas.width).fill(0.0));
 
 function shapeWave(x, y) {
     for (var i = -Math.floor(canvas.width/8)+1; i < canvas.width/8; i++) {
-        wave[3][x+i] = ((x + i) > 0 && (x + i) < canvas.width - 1)? 
-        y*Math.exp(-1.0*i*i/(Math.sqrt(2.0)*canvas.width/30.0)**2): wave[3][x+i];
+        if ((x + i) > 0 && (x + i) < canvas.width - 1)
+        wave[3][x+i] = y*Math.exp(-1.0*i*i/(Math.sqrt(2.0)*canvas.width/30.0)**2);
     }
 }
 
