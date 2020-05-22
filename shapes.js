@@ -399,13 +399,18 @@ shape.rotateAtAxis(0.3, 0.0, 0.0, 1.0);
 
 function deviceInputUp(ev) {
     mouseHold = false;
-    mousePosition.active = false;
-    mousePosition.totalReleases += 1;
+    inputPosition.active = false;
+    inputPosition.totalReleases += 1;
 }
 
 
-let mousePosition = {
-    active: false, x: 0.0, y: 0.0, prevX: 0.0, prevY: 0.0, totalReleases: 0}; 
+let inputPosition = {
+    active: false, 
+    x: 0.0, y: 0.0, 
+    prevX: 0.0, prevY: 0.0,
+    xTouches: [], yTouches: [],
+    prevXTouches: [], prevYTouches: [],
+    totalReleases: 0}; 
 let mouseHold = false;
 document.addEventListener("mousemove", moveHandler);
 document.addEventListener("touchmove", ev => moveHandler(ev, true));
@@ -416,12 +421,19 @@ document.addEventListener("touchstart", ev => mouseHold = true);
 
 
 function getInputPosition(event, isTouch) {
-    let x, y;
+    let x=0, y=0;
     if (isTouch) {
         let touches = event.changedTouches;
-        if (touches.length == 1) {
+        if (touches.length !== 2) {
             x = Math.floor(touches[0].pageX);
             y = Math.floor(touches[0].pageY);
+        } else {
+            return [
+                Math.floor(touches[0].pageX),
+                Math.floor(touches[1].pageX),
+                Math.floor(touches[0].pageY),
+                Math.floor(touches[1].pageY)
+            ];
         }
     } else {
         x = event.clientX;
@@ -430,26 +442,62 @@ function getInputPosition(event, isTouch) {
     return [x, y];
 }
 
+
+function touchRescale(position) {
+    if (inputPosition.prevXTouches.length !== 0 ||
+        inputPosition.prevYTouches.length !== 0) {
+            let prevX = inputPosition.prevXTouches;
+            let prevY = inputPosition.prevYTouches;
+            let v0 = {
+                x: (prevX[0] - prevX[1]), 
+                y: (prevY[0] - prevY[1]),
+                z: 0.0};
+            inputPosition.prevXTouches = inputPosition.xTouches;
+            inputPosition.prevYTouches = inputPosition.yTouches;
+            inputPosition.xTouches = [position[0], position[1]];
+            inputPosition.yTouches =  [position[2], position[3]];
+            let v1 = {
+                x: (position[0] - position[1]), 
+                y: (position[2] - position[3]),
+                z: 0.0};
+            if (dot(v1, v1) > dot(v0, v0)) {
+                shape.changeSize(0.98);
+            } else if (dot(v1, v1) < dot(v0, v0)) {
+                shape.changeSize(1.02);
+            }
+    } else {
+        inputPosition.prevXTouches.push(position[0]);
+        inputPosition.prevXTouches.push(position[1]);
+        inputPosition.prevYTouches.push(position[2]);
+        inputPosition.prevYTouches.push(position[3]);
+    }
+}
+
+
 function moveHandler(event, isTouch=false) {
     if (mouseHold) {
-        if (mousePosition.active) {
+        if (inputPosition.active) {
             let position = getInputPosition(event, isTouch);
-            mousePosition.x = position[0];
-            mousePosition.y = position[1];
-            let dx = mousePosition.x - mousePosition.prevX;
-            let dy = mousePosition.y - mousePosition.prevY;
+            if (position.length > 2) {
+                touchRescale(position);
+                return;
+            }
+            inputPosition.x = position[0];
+            inputPosition.y = position[1];
+            let dx = inputPosition.x - inputPosition.prevX;
+            let dy = inputPosition.y - inputPosition.prevY;
             let angle = 9.0*Math.sqrt(dx*dx + dy*dy)/canvas.width;
             let axes = crossProduct(
                 {x: -dx, y: 0.0, z: dy}, {x: 0.0, y: 1.0, z: 0.0}
                 );
             shape.rotateAtAxis(angle, axes.x, axes.y, axes.z);
-            mousePosition.prevX = mousePosition.x;
-            mousePosition.prevY = mousePosition.y;
+            inputPosition.prevX = inputPosition.x;
+            inputPosition.prevY = inputPosition.y;
         } else {
             let position = getInputPosition(event, isTouch);
-            mousePosition.prevX = position[0];
-            mousePosition.prevY = position[1];
-            mousePosition.active = true;
+            inputPosition.prevX = position[0];
+            inputPosition.prevY = position[1];
+            inputPosition.active = true;
         }
     }
 }
@@ -532,7 +580,7 @@ function draw(viewPoint, index) {
 
 
 function drawMessageIfStart() {
-    if (mousePosition.totalReleases === 0) {
+    if (inputPosition.totalReleases === 0) {
         ctx.font = '50px sans-serif';
         ctx.fillText('Simple 3D Shapes', canvas.width/25.0, 
                     canvas.height/7.0);
