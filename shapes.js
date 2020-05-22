@@ -1,5 +1,5 @@
 /*
-* Basic wireframes of 3d shapes, in pure javascript and html.
+* Basic 3d shapes, using pure javascript and html.
 *
 * The primary reference in writing this script is
 * Chapter 5 and Chapter 11 of Game Engine Architecture by Jason Gregory,
@@ -397,23 +397,45 @@ shape = new Cube(1.3);
 shape.rotateAtAxis(0.3, 0.0, 0.0, 1.0);
 
 
-let mousePosition = {
-    active: false, x: 0.0, y: 0.0, prevX: 0.0, prevY: 0.0, totalReleases: 0}; 
-let mouseHold = false;
-document.addEventListener("mousemove", mouseHandler);
-document.addEventListener("mouseup", ev => {
+function deviceInputUp(ev) {
     mouseHold = false;
     mousePosition.active = false;
     mousePosition.totalReleases += 1;
-});
+}
+
+
+let mousePosition = {
+    active: false, x: 0.0, y: 0.0, prevX: 0.0, prevY: 0.0, totalReleases: 0}; 
+let mouseHold = false;
+document.addEventListener("mousemove", moveHandler);
+document.addEventListener("touchmove", ev => moveHandler(ev, true));
+document.addEventListener("touchend", deviceInputUp);
+document.addEventListener("mouseup", deviceInputUp);
 document.addEventListener("mousedown", ev => mouseHold = true);
+document.addEventListener("touchstart", ev => mouseHold = true);
 
 
-function mouseHandler(event) {
+function getInputPosition(event, isTouch) {
+    let x, y;
+    if (isTouch) {
+        let touches = event.changedTouches;
+        if (touches.length == 1) {
+            x = Math.floor(touches[0].pageX);
+            y = Math.floor(touches[0].pageY);
+        }
+    } else {
+        x = event.clientX;
+        y = event.clientY;
+    }
+    return [x, y];
+}
+
+function moveHandler(event, isTouch=false) {
     if (mouseHold) {
         if (mousePosition.active) {
-            mousePosition.x = event.clientX;
-            mousePosition.y = event.clientY;
+            let position = getInputPosition(event, isTouch);
+            mousePosition.x = position[0];
+            mousePosition.y = position[1];
             let dx = mousePosition.x - mousePosition.prevX;
             let dy = mousePosition.y - mousePosition.prevY;
             let angle = 9.0*Math.sqrt(dx*dx + dy*dy)/canvas.width;
@@ -424,8 +446,9 @@ function mouseHandler(event) {
             mousePosition.prevX = mousePosition.x;
             mousePosition.prevY = mousePosition.y;
         } else {
-            mousePosition.prevX = event.clientX;
-            mousePosition.prevY = event.clientY;
+            let position = getInputPosition(event, isTouch);
+            mousePosition.prevX = position[0];
+            mousePosition.prevY = position[1];
             mousePosition.active = true;
         }
     }
@@ -438,8 +461,10 @@ function selectHandler(event) {
     let val = Number.parseInt(event.target.value);
     if (val >= 0) {
         cull  = shape.cull;
+        fill = shape.fill;
         shape = makeShape(val);
         shape.cull = cull;
+        shape.fill = fill;
     }
 }
 
