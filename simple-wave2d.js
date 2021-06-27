@@ -5,7 +5,7 @@
 function createGrid(n, m) {
     let grid = [];
     for (let i = 0; i < n; i++) {
-        grid.push(new Array(m).fill(0.0));
+        grid.push(new Float32Array(m).fill(0));
     }
     return grid;
 }
@@ -86,8 +86,10 @@ function animate() {
             wave[3][i][j] = 0.5*(wave[2][i+1][j] + wave[2][i-1][j] + 
                                  wave[2][i][j+1] + wave[2][i][j-1]) - wave[1][i][j];
             col = Math.floor(wave[2][i][j] + wave[0][i][j]);
+           //  col = wave[2][i][j] + wave[0][i][j];
             col += 25;
             ctx.fillStyle = `rgb(${Math.floor(col/4)}, ${Math.floor(col/2)}, ${col})`;
+            // ctx.fillStyle = `rgb(${col}, ${0}, ${0})`;
             ctx.fillRect(i*grid2Canvas, j*grid2Canvas, 
                             grid2Canvas, grid2Canvas);
             wave[0][i][j] = 0.0;

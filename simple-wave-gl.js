@@ -24,17 +24,12 @@ uniform sampler2D tex1;
 uniform sampler2D tex2;
 
 void main () {
-    if (fragTexCoord.x > dx && fragTexCoord.x < 1.0-dx &&
-        fragTexCoord.y > dy && fragTexCoord.y < 1.0-dy) {
-        vec4 l = texture2D(tex2, fragTexCoord + vec2(dx, 0.0));
-        vec4 r = texture2D(tex2, fragTexCoord + vec2(-dx, 0.0));
-        vec4 u = texture2D(tex2, fragTexCoord + vec2(0.0, dy));
-        vec4 d = texture2D(tex2, fragTexCoord + vec2(0.0, -dy));
-        vec4 c = texture2D(tex1, fragTexCoord);
-        gl_FragColor = (u + d + l + r)/2.0 - c;
-    } else {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0); 
-    }
+    vec4 l = texture2D(tex2, fragTexCoord + vec2(dx, 0.0));
+    vec4 r = texture2D(tex2, fragTexCoord + vec2(-dx, 0.0));
+    vec4 u = texture2D(tex2, fragTexCoord + vec2(0.0, dy));
+    vec4 d = texture2D(tex2, fragTexCoord + vec2(0.0, -dy));
+    vec4 c = texture2D(tex1, fragTexCoord);
+    gl_FragColor = (u + d + l + r)/2.0 - c;
 }
 `
 

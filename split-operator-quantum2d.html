@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
+<html>
+    <center>
+        <h3 style="color:white;">Split-operator method</h3>>
+    <body style="font-family: Arial; background-color: rgb(0, 0, 0);">
+        <canvas id="canvas", oncontextmenu="event.preventDefault()",
+         style = "width: 1024px; height: 256px;"> </canvas>
+         <br/> <!--<br/> !-->
+         <p style="color:white; font-size:12px;">
+         Use the mouse to place a new wavefunction. Press 'q' to use the GPU accelerated FFT,<br>
+         and 'e' to go back to the CPU version. While the GPU version is faster,<br>
+         it is at the moment rather flawed, and you may quickly encounter numerical artifacts.<br>
+         </p>
+    </body>
+    </center>
+    <script type='text/javascript'>
+        var canvas = document.getElementById('canvas');
+        var Module = {
+          canvas: canvas
+        };
+    </script>
+    <!--<script type='text/javascript'>
+        var canvas = document.getElementById('canvas');
+        canvas.style.width = `${parseInt(0.95*window.innerHeight)}px`;
+        canvas.style.height = `${parseInt(0.95*window.innerHeight)}px`;
+    </script>!-->
+    <script src="split-operator-quantum2d.js"></script>
+</html>

@@ -289,15 +289,15 @@ class Cylinder extends Shape {
 class Cone extends Shape {
     constructor(height=2.0, radius=1.0, pointsPerEdge=100) {
         super();
-        let circle_len = pointsPerEdge;
-        for (let i = 0; i < circle_len; i++) {
+        let circleLen = pointsPerEdge;
+        for (let i = 0; i < circleLen; i++) {
             this.pushVertex(
-                radius*Math.cos(2*Math.PI*i/circle_len),
-                radius*Math.sin(2*Math.PI*i/circle_len),
+                radius*Math.cos(2*Math.PI*i/circleLen),
+                radius*Math.sin(2*Math.PI*i/circleLen),
                 height/2.0
             );
-            this.pushTriangle(i, circle_len, (i+1) % circle_len);
-            this.pushTriangle(i, (i+1) % circle_len, circle_len+1);
+            this.pushTriangle(i, circleLen, (i+1) % circleLen);
+            this.pushTriangle(i, (i+1) % circleLen, circleLen+1);
         }
         this.pushVertex(0.0, 0.0, -height/2.0);
         this.pushVertex(0.0, 0.0, height/2.0);
@@ -312,37 +312,37 @@ class Sphere extends Shape {
         radius=1.0, 
         pointsPerHalfLongitude=15, pointsPerHalfLatitude=15) {
         super();
-        let circle_len = pointsPerHalfLatitude;
-        let arc_len = pointsPerHalfLongitude;
+        let circleLen = pointsPerHalfLatitude;
+        let arcLen = pointsPerHalfLongitude;
         let r = radius;
-        for (let j = 0; j < arc_len - 1; j++) {
-            for (let i = 0; i < circle_len; i++) {
+        for (let j = 0; j < arcLen - 1; j++) {
+            for (let i = 0; i < circleLen; i++) {
                 this.pushVertex(
-                    r*(Math.cos(2*Math.PI*i/circle_len)*
-                       Math.sin(Math.PI*(j + 1)/arc_len)),
-                    r*(Math.sin(2*Math.PI*i/circle_len)*
-                       Math.sin(Math.PI*(j + 1)/arc_len)),
-                    r*Math.cos(Math.PI*(j + 1)/arc_len)
+                    r*(Math.cos(2*Math.PI*i/circleLen)*
+                       Math.sin(Math.PI*(j + 1)/arcLen)),
+                    r*(Math.sin(2*Math.PI*i/circleLen)*
+                       Math.sin(Math.PI*(j + 1)/arcLen)),
+                    r*Math.cos(Math.PI*(j + 1)/arcLen)
                 );
-                if (j + 1 < arc_len - 1) {
+                if (j + 1 < arcLen - 1) {
                     this.pushTriangle(
-                        j*circle_len + i, (j + 1)*circle_len + i, 
-                        (j + 1)*circle_len + (i + 1) % circle_len);
+                        j*circleLen + i, (j + 1)*circleLen + i, 
+                        (j + 1)*circleLen + (i + 1) % circleLen);
                     this.pushTriangle(
-                        (j + 1)*circle_len + (i + 1) % circle_len, 
-                        j*circle_len + (i + 1) % circle_len, j*circle_len + i);
+                        (j + 1)*circleLen + (i + 1) % circleLen, 
+                        j*circleLen + (i + 1) % circleLen, j*circleLen + i);
                 }
             }
         }
         this.pushVertex(0.0, 0.0, -r);
         this.pushVertex(0.0, 0.0, r);
-        for (let i = 0; i < circle_len; i++) {
+        for (let i = 0; i < circleLen; i++) {
             this.pushTriangle(
-                (arc_len - 1)*circle_len + 1,
-                 i, (i + 1) % circle_len);
+                (arcLen - 1)*circleLen + 1,
+                 i, (i + 1) % circleLen);
             this.pushTriangle(
-                (arc_len - 2)*circle_len + i, (arc_len - 1)*circle_len,
-                (arc_len - 2)*circle_len + ((i + 1) % circle_len));
+                (arcLen - 2)*circleLen + i, (arcLen - 1)*circleLen,
+                (arcLen - 2)*circleLen + ((i + 1) % circleLen));
         }
         this.cull = true;
     }
@@ -535,8 +535,12 @@ fillSurface.addEventListener("click", ev => shape.toggleFill());
 
 function toViewCoordinates(viewPoint, worldPoint) {
     let f = (useProjection)? 20.0/(worldPoint.y - 10.0): -2.0;
-    viewPoint[0] = 100*f*worldPoint.x + canvas.width/2;
-    viewPoint[1] = -100*f*worldPoint.z + canvas.height/2;
+    let nearPlaneWidth = 0.2;
+    let nearPlaneHeight = 0.1;
+    viewPoint[0] = 2000.0*worldPoint.x/(worldPoint.y - 10.0) + canvas.width/2.0;
+    viewPoint[1] = -2000.0*worldPoint.z/(worldPoint.y - 10.0) + canvas.height/2.0;
+    // viewPoint[0] = 100*f*worldPoint.x + canvas.width/2;
+    // viewPoint[1] = -100*f*worldPoint.z + canvas.height/2;
 }
 
 

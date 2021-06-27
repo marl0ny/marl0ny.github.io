@@ -1,21 +1,126 @@
 <!DOCTYPE html>
+<meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet"> 
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"> 
 <html>
     <head>
         <style>
         body {margin: 50px; /*background-color: beige;*/}
+        .a-purple {outline: none; text-decoration: none; color: rgb(63, 18, 65);}
+        .a-green {outline: none; text-decoration: none; color: rgb(37, 75, 28);}
+        .spec-div {border: 1px #000000; margin: 0 10%; background: #eeeeee;
+             text-align: center; border-radius: 3% 3%; border-spacing: 10px;
+             box-shadow: 0px 2px 2px black;}
         </style>
     </head>
-    <body style ="font-family: Helvetica;">
-        <center>
-        <h1>Greetings Everyone!</h1>
-        <h2>Some of my Projects</h2>
+    <center>
+        <h1><b>Some of my Projects</b></h1>
+        <!--<h2>Some of my Projects</h2> !-->
         </center>
+    <body style ="font-family: 'Noto Sans', sans-serif;">
+        <hr>
+        <center>
+            <h2><b>WebGL Programs</b></h2>
+        </center>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-purple' href="./simple-wave-gl.html">Colourful Waves</a></h3>
+                <p>Simulation of the wave equation in 2D.</p><br>
+            </center>
+        </div>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-green' href="https://marl0ny.github.io/QM-Simulator-2D/index.html">Single Particle Quantum Mechanics in 2D</a></h3>
+            </center>
+                <p>Interactive quantum mechanics simulation where the user can draw new potential barriers and scatter
+                    the <br> particle wavefunction off them.
+                </p><br>
+        </div>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-purple' href="https://marl0ny.github.io/wasm-fluid2d/">Lattice-Boltzmann Fluids</a></h3>
+                <p>Interactive 2D fluid simulation.</p><br>
+            </center>
+        </div>
+        <hr>
+        <center>
+        <h2>Python GUI Apps</h2>
+        </center>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-green' href="https://github.com/marl0ny/QM-Simulator-1D">Single Particle Quantum Mechanics in 1D</a></h3>
+                <img src="https://raw.githubusercontent.com/marl0ny/QM-Simulator-1D/master/images/coherent_state_sho.gif"/>
+                <p>Interactive quantum mechanics simulation in 1D. <br> The user is able to reshape the wavefunction or the potential
+                    using the mouse or through text input.
+                </p><br>
+            </center>
+        </div>
+        <br>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-purple' href="https://github.com/marl0ny/QM-Simulator-1D">Interactive Fourier Series in Matplotlib</a></h3>
+                <img src="https://raw.githubusercontent.com/marl0ny/Real-Fourier-Series/master/rect.gif"/> 
+                <p>Visualization of the Fourier series using rotating circles to represent each of the sine/cosine terms.
+                </p><br>
+            </center>
+        </div>
+        <br>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-green' href="https://github.com/marl0ny/grids-on-the-complex-plane">Plot of Complex Functions</a></h3>
+                <img src="https://raw.githubusercontent.com/marl0ny/grids-on-the-complex-plane/master/example.gif"/> 
+                <p>Interactively graph complex functions, such as the Riemann-Zeta function.</p><br>    
+            </center>
+        </div>
+        <br>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-purple' href="https://github.com/marl0ny/Linear-ODE-2D">Linear ODEs in 2D</a></h3>
+                <img style="width:800px;" src="https://raw.githubusercontent.com/marl0ny/Linear-ODE-2D/master/images/screenshot.jpg"/>
+                <br>
+            </center>
+        </div>
+        <br>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-green' href="https://github.com/marl0ny/Nonlinear-ODE-2D">Nonlinear ODEs</a></h3>
+                <img style="width:800px;" src="https://raw.githubusercontent.com/marl0ny/Nonlinear-ODE-2D/master/screenshot.PNG"/> 
+                <p>2D phase plot of arbitrary ODEs</p><br>
+            </center>
+        </div>
+        <br>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-purple' href="https://github.com/marl0ny/dft-toy">Exploring the DFT</a></h3>
+                <img style="width:800px;" src="https://raw.githubusercontent.com/marl0ny/dft-toy/master/screenshot.jpg"/> 
+                <p>Plot the discrete fourier transform of various functions.</p><br>
+            </center>
+        </div>
+        <br>
+        <hr>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-green' href="https://github.com/marl0ny/colourful-sound-bars">FFT Music Visualizer</a></h3>
+                <img src="https://raw.githubusercontent.com/marl0ny/colourful-sound-bars/master/musical-colour-bars.gif"/> 
+                <p>Show the frequency spectrum of audio data.</p><br>
+            </center>
+        </div>
+        <br>
+        <div class='spec-div'>
+            <center>
+                <h3><a class='a-purple' href="https://github.com/marl0ny/Sketchable-Fourier-Transform">Taking the Fourier Transform of Sketches</a></h3>
+                <img src="https://raw.githubusercontent.com/marl0ny/Sketchable-Fourier-Transform/master/Pi.gif"/> 
+                <p>Complex Fourier trasform of mouse sketches using rotating cicles to represent each complex term.
+                </p><br>
+            </center>
+        </div>
+        <br>
+        <div>
         <p>
+            <h3>More</h3>
             <ul>
-                <li>
-                    <a href="https://marl0ny.github.io/Sketchable-Fourier-Transform/HTML/index.html">
-                        Mouse Sketches and Fourier circles</a>
-                </li>
                 <li>
                     <a href="./simple-diffusion.html">
                         Simple Diffusion Along a Line</a>
@@ -28,19 +133,24 @@
                     <a href="./simple-wave2d.html">
                         Waves in 2D, using the HTML5 canvas</a>
                 </li>
-		<li>
-                    <a href="./simple-wave-gl.html">
-                        Waves in 2D, using WebGL</a>
-		</li>
-		<li>
-		    <a href="https://marl0ny.github.io/QM-Simulator-2D/index.html">
-		    Qunatum Mechanics in 2D<a/>
-		</li>
                 <li>
                     <a href="./shapes.html">
                         Simple 3D shapes</a>
                 </li>
                 </ul>
         </p>
+    </div>
     </body>
+    <script>
+        let info = [108, 97, 109, 109, 97, 114, 108, 
+                    111, 110, 97, 117, 114, 101, 108, 
+                    49, 50, 51, 52, 53, 54, 55, 56, 57, 
+                    64, 103, 109, 97, 105, 108, 46, 99, 
+                    111, 109];
+        for (let c of info) {
+            console.log(c);
+        }
+        console.log(document.getElementById('h').href);
+        console.log(document.getElementById('h').text);
+    </script>
 </html>
