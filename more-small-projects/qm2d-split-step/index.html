@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
+<html>
+	<head>
+        <style>
+            h2 {font-family:Arial, Helvetica, sans-serif; }
+            label {font-family:Arial, Helvetica, sans-serif; }
+			text {font-family:Arial, Helvetica, sans-serif; }
+        </style>
+    </head>
+	<body style="background-color: rgb(25, 25, 25);"
+		     "touch-action: none";>
+			 <center>
+				<canvas style="touch-action: none"
+					id="sketchCanvas"></canvas>
+					<br>
+				<select id="draw-select" class="draw-select" name="draw-select">
+					<option value="-1"> Draw... </option>
+					<option value="0"> Reshape Potential </option>
+					<option value="1"> New Wave function </option>
+				</select>
+				&nbsp; 	&nbsp; 	&nbsp;
+				<button id="sho" name="Harmonic Oscillator">
+				Embed Harmonic Oscillator
+				</button>
+				&nbsp; 	&nbsp; 	&nbsp;
+				<button id="zero" name="Zero">
+				Clear Potential
+				</button>
+			</center>
+		<script type="module" src="main.js"></script>
+		<!-- <script type="text/javascript" src="fft-worker.js"></script> -->
+		<!-- <script type="module" src="./array.js"></script>
+		<script type="module" src="./complex.js"></script>
+		<script type="module" src="./domain-color.js"></script>
+		<script type="module" src="./fft.js"></script>
+		<script type="module" src="./split-step2d.js"></script> -->
+	</body>
+</html>
+
