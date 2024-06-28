@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
+<html>
+	<body style="background-color: rgb(0, 0, 0); touch-action: none";>
+		<canvas style="touch-action: none"
+			id="sketchCanvas"></canvas>
+		<br>
+		<div>
+			<label for="userExprInput" style="color:white; font-family:Aial, Helvetica, sans-serif">
+				Enter f(x, t): </label>
+			<input type="text" id="userExprInput", default="cos(10.0*(t-y))", 
+				name="userExprInput", size="20"/>
+			<input type="range" id="angle" name="angle"
+				min="-580.0" max="580.0" value="0.0"/>
+				<label for="angle" style="color:white; font-family:Arial, Helvetica, sans-serif">
+					Boost angle</label>
+			<label style="color:white; font-family:Arial, Helvetica, sans-serif" id="speedDisplay"> v=0c</label>
+			<input type="checkbox" id="translateTime"/>
+			<label for="translateTime" style="color:white; font-family:Arial, Helvetica, sans-serif">
+				Move forward in time
+			</label>
+		</div>
+		<br>
+		<div id="userSliders", style="color:white; font-family:Aial, Helvetica, sans-serif"> </div>
+		<script src="main.js"></script>
+
+	</body>
+</html>
+
